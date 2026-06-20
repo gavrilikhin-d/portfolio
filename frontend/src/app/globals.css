@@ -3,6 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --gradient-primary: linear-gradient(to right, #60a5fa, #6366f1, #a855f7);
 }
 
 @theme inline {
@@ -25,9 +26,13 @@ body {
   font-family: var(--font-sans);
 }
 
-.text-gradient {
-  background: linear-gradient(to right, #60a5fa, #6366f1, #a855f7);
+.text-gradient-primary {
+  background: var(--gradient-primary);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent !important;
+}
+
+.bg-gradient-primary {
+  background: var(--gradient-primary);
 }
