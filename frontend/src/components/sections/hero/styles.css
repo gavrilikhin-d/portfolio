@@ -1,0 +1,25 @@
+@keyframes hero-appear {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-appear {
+  opacity: 0;
+  animation: hero-appear 1.0s ease-in-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-appear {
+    animation: none;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}
