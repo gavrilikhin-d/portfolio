@@ -61,9 +61,15 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={pending}
-        className="bg-gradient-primary mt-2 inline-flex w-fit items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+        className="btn-dark mt-2 w-fit"
       >
-        {pending ? "Sending..." : "Send Message"}
+        {pending ? "Sending..." : "Submit"}
+        <img
+          src="/icons/chevron-right.svg"
+          alt=""
+          aria-hidden
+          className="size-4"
+        />
       </button>
     </form>
   );
