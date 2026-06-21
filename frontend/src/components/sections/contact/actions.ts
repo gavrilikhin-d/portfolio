@@ -5,6 +5,7 @@ import { Resend } from "resend";
 import { getClientIp } from "@/lib/get-client-ip";
 import { checkRateLimit, formatRetryAfter, getRateLimitStatus } from "@/lib/rate-limit";
 import { EpochTime } from "@/types";
+import { hash } from "node:crypto";
 
 export type ContactState = {
   success: boolean;
@@ -65,6 +66,9 @@ export async function sendContactEmail(
 
   const resend = new Resend(resendApiKey);
 
+  const idempotencyKey = hash("md5", `${email}-${message}`);
+  console.log("idempotencyKey", idempotencyKey);
+
   const { error } = await resend.emails.send({
     from:
       process.env.RESEND_FROM_EMAIL ?? "Portfolio <onboarding@resend.dev>",
@@ -72,6 +76,8 @@ export async function sendContactEmail(
     replyTo: email,
     subject: `Portfolio contact from ${email}`,
     text: `Email: ${email}\n\n${message}`,
+  }, {
+    idempotencyKey: hash("md5", `${email}-${message}`),
   });
 
   if (error) {
