@@ -2,15 +2,46 @@
 
 import { Resend } from "resend";
 
+import { getClientIp } from "@/lib/get-client-ip";
+import { checkRateLimit, formatRetryAfter, getRateLimitStatus } from "@/lib/rate-limit";
+import { EpochTime } from "@/types";
+
 export type ContactState = {
   success: boolean;
   error?: string;
+  rateLimitedUntil?: EpochTime;
 };
+
+export async function checkContactRateLimit(): Promise<ContactState> {
+  const ip = await getClientIp();
+  const rateLimit = getRateLimitStatus(ip);
+
+  if (!rateLimit.allowed) {
+    return {
+      success: false,
+      error: `Too many messages sent. Try again in ${formatRetryAfter(rateLimit.retryAfterMs)}.`,
+      rateLimitedUntil: Date.now() + rateLimit.retryAfterMs as EpochTime,
+    };
+  }
+
+  return { success: false };
+}
 
 export async function sendContactEmail(
   _prevState: ContactState,
   formData: FormData,
 ): Promise<ContactState> {
+  const ip = await getClientIp();
+  const rateLimit = checkRateLimit(ip);
+
+  if (!rateLimit.allowed) {
+    return {
+      success: false,
+      error: `Too many messages sent. Try again in ${formatRetryAfter(rateLimit.retryAfterMs)}.`,
+      rateLimitedUntil: Date.now() + rateLimit.retryAfterMs as EpochTime,
+    };
+  }
+
   const email = formData.get("email")?.toString().trim();
   const message = formData.get("message")?.toString().trim();
 

@@ -2,7 +2,11 @@
 
 import { useActionState, useEffect, useRef, useState } from "react";
 
-import { sendContactEmail, type ContactState } from "./actions";
+import {
+  checkContactRateLimit,
+  sendContactEmail,
+  type ContactState,
+} from "./actions";
 
 const initialState: ContactState = { success: false };
 
@@ -12,10 +16,53 @@ const inputClassName =
 export function ContactForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [showToast, setShowToast] = useState(false);
+  const [blockedUntil, setBlockedUntil] = useState<number | null>(null);
+  const [rateLimitError, setRateLimitError] = useState<string | null>(null);
   const [state, formAction, pending] = useActionState(
     sendContactEmail,
     initialState,
   );
+
+  const isRateLimited =
+    blockedUntil !== null && Date.now() < blockedUntil;
+
+  useEffect(() => {
+    checkContactRateLimit().then((result) => {
+      if (result.rateLimitedUntil) {
+        setBlockedUntil(result.rateLimitedUntil);
+        setRateLimitError(result.error ?? null);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (state.rateLimitedUntil) {
+      setBlockedUntil(state.rateLimitedUntil);
+      if (state.error) {
+        setRateLimitError(state.error);
+      }
+    }
+  }, [state.rateLimitedUntil, state.error]);
+
+  useEffect(() => {
+    if (!blockedUntil) {
+      return;
+    }
+
+    const remainingMs = blockedUntil - Date.now();
+    if (remainingMs <= 0) {
+      setBlockedUntil(null);
+      setRateLimitError(null);
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      setBlockedUntil(null);
+      setRateLimitError(null);
+    }, remainingMs);
+
+    return () => window.clearTimeout(timer);
+  }, [blockedUntil]);
 
   useEffect(() => {
     if (!state.success) {
@@ -36,7 +83,7 @@ export function ContactForm() {
     <>
       {showToast && (
         <div className="toast" role="status">
-          Thanks for reaching out! I'll get back to you soon.
+          Thanks for reaching out! I&apos;ll get back to you soon.
         </div>
       )}
 
@@ -73,19 +120,27 @@ export function ContactForm() {
           />
         </div>
 
-        {state.error && (
-          <p className="text-sm text-red-400">{state.error}</p>
-        )}
+        <div className="flex flex-row items-center justify-between gap-2">
+          <button
+            type="submit"
+            disabled={pending || isRateLimited}
+            className="btn-dark w-fit"
+          >
+            {pending ? "Sending..." : "Submit"}
+            <img
+              src="/icons/chevron-right.svg"
+              alt=""
+              aria-hidden
+              className="size-4"
+            />
+          </button>
 
-        <button type="submit" disabled={pending} className="btn-dark mt-2 w-fit">
-          {pending ? "Sending..." : "Submit"}
-          <img
-            src="/icons/chevron-right.svg"
-            alt=""
-            aria-hidden
-            className="size-4"
-          />
-        </button>
+          {(state.error ?? rateLimitError) && (
+            <p className="text-sm text-red-400">
+              {state.error ?? rateLimitError}
+            </p>
+          )}
+        </div>
       </form>
     </>
   );
