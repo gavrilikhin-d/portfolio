@@ -26,6 +26,12 @@ body {
   font-family: var(--font-sans);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 .text-gradient-primary {
   background: var(--gradient-primary);
   background-clip: text;
