@@ -1,0 +1,84 @@
+@keyframes skills-scroll-left {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes skills-scroll-right {
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.skills-track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  animation: skills-scroll-left 40s linear infinite;
+}
+
+.skill-card {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  width: 7.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background: rgb(255 255 255 / 0.04);
+  padding: 1.25rem 1rem;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.skill-card:hover {
+  border-color: rgb(255 255 255 / 0.22);
+  background: rgb(255 255 255 / 0.07);
+}
+
+.skill-card-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.skill-card-name {
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: rgb(255 255 255 / 0.8);
+}
+
+.skills-track-right {
+  animation-name: skills-scroll-right;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skills-track {
+    animation: none;
+  }
+}
+
+.skills-fade {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+}
+
+.skills-stripes:hover .skills-track {
+  animation-play-state: paused;
+}
