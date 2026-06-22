@@ -32,22 +32,7 @@ export default function Experience() {
           </ol>
         </div>
 
-        <div className="flex flex-col items-start gap-6">
-          <CvPreview />
-          <a
-            href={cvPath}
-            download={cvDownloadName}
-            className="btn-dark w-fit"
-          >
-            Download CV
-            <img
-              src="/icons/chevron-right.svg"
-              alt=""
-              aria-hidden
-              className="size-4"
-            />
-          </a>
-        </div>
+        <CvPreview />
       </div>
     </section>
   );
