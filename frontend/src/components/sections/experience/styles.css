@@ -1,0 +1,99 @@
+.cv-file {
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  max-width: 16rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background: #121212;
+  box-shadow: 0 24px 48px rgb(0 0 0 / 0.35);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    box-shadow 0.15s ease,
+    filter 0.15s ease;
+}
+
+.cv-file:hover {
+  border-color: rgb(255 255 255 / 0.12);
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 0.22),
+    0 28px 56px rgb(0 0 0 / 0.45);
+  filter: brightness(1.05);
+}
+
+.cv-file-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid rgb(255 255 255 / 0.08);
+  padding: 0.75rem 1rem;
+}
+
+.cv-file-dot {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 9999px;
+}
+
+.cv-file-dot-red {
+  background: #ff5f57;
+}
+
+.cv-file-dot-yellow {
+  background: #febc2e;
+}
+
+.cv-file-dot-green {
+  background: #28c840;
+}
+
+.cv-file-title {
+  margin-left: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  color: rgb(255 255 255 / 0.5);
+}
+
+.cv-file-body {
+  position: relative;
+  aspect-ratio: 210 / 297;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.cv-file-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  pointer-events: none;
+}
+
+.cv-file-hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgb(0 0 0 / 0.6);
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.cv-file:hover .cv-file-hint {
+  opacity: 1;
+}
+
+.cv-file-hint-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
