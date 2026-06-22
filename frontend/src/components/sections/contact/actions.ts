@@ -65,10 +65,6 @@ export async function sendContactEmail(
   }
 
   const resend = new Resend(resendApiKey);
-
-  const idempotencyKey = hash("md5", `${email}-${message}`);
-  console.log("idempotencyKey", idempotencyKey);
-
   const { error } = await resend.emails.send({
     from:
       process.env.RESEND_FROM_EMAIL ?? "Portfolio <onboarding@resend.dev>",
