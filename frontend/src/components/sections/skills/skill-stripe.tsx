@@ -6,7 +6,18 @@ type SkillStripeProps = {
 };
 
 export function SkillStripe({ skills, direction }: SkillStripeProps) {
-  const items = [...skills, ...skills];
+  const renderGroup = (keyPrefix: string) =>
+    skills.map((skill) => (
+      <div key={`${keyPrefix}-${skill.name}`} className="skill-card">
+        <img
+          src={skill.icon}
+          alt=""
+          aria-hidden
+          className="skill-card-icon"
+        />
+        <span className="skill-card-name">{skill.name}</span>
+      </div>
+    ));
 
   return (
     <div>
@@ -14,17 +25,10 @@ export function SkillStripe({ skills, direction }: SkillStripeProps) {
         <div
           className={`skills-track ${direction === "right" ? "skills-track-right" : ""}`}
         >
-          {items.map((skill, index) => (
-            <div key={`${skill.name}-${index}`} className="skill-card">
-              <img
-                src={skill.icon}
-                alt=""
-                aria-hidden
-                className="skill-card-icon"
-              />
-              <span className="skill-card-name">{skill.name}</span>
-            </div>
-          ))}
+          <div className="skills-group">{renderGroup("a")}</div>
+          <div className="skills-group" aria-hidden="true">
+            {renderGroup("b")}
+          </div>
         </div>
       </div>
     </div>

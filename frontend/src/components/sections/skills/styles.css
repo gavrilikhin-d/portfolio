@@ -1,28 +1,35 @@
 @keyframes skills-scroll-left {
   from {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 
   to {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
 @keyframes skills-scroll-right {
   from {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 
   to {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 .skills-track {
   display: flex;
   width: max-content;
-  gap: 1rem;
   animation: skills-scroll-left 40s linear infinite;
+  will-change: transform;
+}
+
+.skills-group {
+  display: flex;
+  flex-shrink: 0;
+  gap: 1rem;
+  padding-right: 1rem;
 }
 
 .skill-card {
