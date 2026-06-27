@@ -1,5 +1,5 @@
 import { CvPreview } from "./cv-preview";
-import { cvDownloadName, cvPath, workExperience } from "./experience-data";
+import { workExperience } from "./experience-data";
 import "./styles.css";
 
 export default function Experience() {
@@ -16,7 +16,7 @@ export default function Experience() {
             {workExperience.map((job) => (
               <li key={`${job.company}-${job.period}`} className="relative pl-6">
                 <span className="absolute left-0 top-2 h-full w-px bg-white/15" />
-                <span className="absolute left-0 top-2 size-2 -translate-x-[3px] rounded-full bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-500" />
+                <span className="absolute left-0 top-2 size-2 translate-x-[-3px] rounded-full bg-linear-to-r from-blue-400 via-indigo-500 to-purple-500" />
                 <p className="text-sm text-white/50">{job.period}</p>
                 <h3 className="mt-1 text-lg font-semibold text-white">
                   {job.role}
