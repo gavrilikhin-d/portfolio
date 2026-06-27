@@ -23,7 +23,7 @@ export default function Hero() {
 
         <div className="ml-0.5 mt-8 flex flex-wrap items-center gap-3">
           <a
-            href="#work"
+            href="#experience"
             className="bg-gradient-primary inline-flex items-center gap-1.5 rounded-md px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
           >
             View My Work
