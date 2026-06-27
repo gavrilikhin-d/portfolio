@@ -8,6 +8,7 @@ export default function Contact() {
     <section id="contact" className="bg-black px-8 py-24">
       <div className="mx-auto grid w-full max-w-5xl gap-12 md:grid-cols-2 md:gap-16">
         <div className="order-1 md:order-2">
+          <p className="text-gradient-primary text-sm font-medium">Contact</p>
           <h2 className="mt-2 text-3xl font-bold tracking-tight text-white md:text-4xl">
             Let's work together
           </h2>
