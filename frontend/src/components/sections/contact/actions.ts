@@ -40,6 +40,11 @@ export async function sendContactEmail(
   _prevState: ContactState,
   formData: FormData,
 ): Promise<ContactState> {
+  const honeypot = formData.get("company")?.toString().trim();
+  if (honeypot) {
+    return { success: true };
+  }
+
   const email = formData.get("email")?.toString().trim();
   const message = formData.get("message")?.toString().trim();
 
@@ -55,7 +60,6 @@ export async function sendContactEmail(
   if (contactRateLimit.error) {
     return contactRateLimit;
   }
-
 
   const resendApiKey = process.env.RESEND_API_KEY;
   const contactEmail = process.env.CONTACT_EMAIL;

@@ -75,6 +75,17 @@ export function ContactForm() {
       )}
 
       <form ref={formRef} action={formAction} className="flex flex-col gap-4">
+        <div aria-hidden="true" className="hidden">
+          <label htmlFor="company">Company</label>
+          <input
+            id="company"
+            name="company"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
+
         <div>
           <label htmlFor="email" className="mb-1.5 block text-sm text-white/70">
             Email
