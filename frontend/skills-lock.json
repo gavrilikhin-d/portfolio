@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "upstash": {
+      "source": "upstash/skills",
+      "sourceType": "github",
+      "skillPath": "skills/upstash/SKILL.md",
+      "computedHash": "8b45afa04c0d291f5c26a29bfdef8ab6cef64c07e0d082c426da8cb8fa464860"
+    }
+  }
+}
