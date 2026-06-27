@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useActionState, useEffect, useRef, useState } from "react";
 
 import {
-  checkContactRateLimit,
   sendContactEmail,
   type ContactState,
 } from "./actions";
@@ -18,10 +17,6 @@ const inputClassName =
 
 export function ContactForm() {
   const formRef = useRef<HTMLFormElement>(null);
-  const [initialRateLimit, setInitialRateLimit] = useState<{
-    until?: number;
-    error?: string;
-  }>({});
   const [toastShownAt, setToastShownAt] = useState<number | null>(null);
   const [now, setNow] = useState(() => Date.now());
   const [state, formAction, pending] = useActionState(
@@ -29,26 +24,12 @@ export function ContactForm() {
     initialState,
   );
 
-  const blockedUntil =
-    state.rateLimitedUntil ?? initialRateLimit.until ?? null;
+  const blockedUntil = state.rateLimitedUntil ?? null;
   const isRateLimited = blockedUntil !== null && now < blockedUntil;
   const toastAge = toastShownAt === null ? null : now - toastShownAt;
   const showToast =
     toastAge !== null && toastAge < TOAST_VISIBLE_MS;
-  const displayError =
-    state.error ?? (isRateLimited ? initialRateLimit.error : undefined);
-
-  useEffect(() => {
-    checkContactRateLimit().then((result) => {
-      if (result.rateLimitedUntil) {
-        setInitialRateLimit({
-          until: result.rateLimitedUntil,
-          error: result.error,
-        });
-        setNow(Date.now());
-      }
-    });
-  }, []);
+  const displayError = state.error;
 
   useEffect(() => {
     if (!state.success) {
