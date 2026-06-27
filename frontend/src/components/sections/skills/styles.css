@@ -86,6 +86,6 @@
   );
 }
 
-.skills-stripes:has(.skill-card:hover) .skills-track {
+.skills-stripes:hover .skills-track {
   animation-play-state: paused;
 }
