@@ -40,11 +40,6 @@ export async function sendContactEmail(
   _prevState: ContactState,
   formData: FormData,
 ): Promise<ContactState> {
-  const contactRateLimit = await checkContactRateLimit();
-  if (contactRateLimit.error) {
-    return contactRateLimit;
-  }
-
   const email = formData.get("email")?.toString().trim();
   const message = formData.get("message")?.toString().trim();
 
@@ -55,6 +50,12 @@ export async function sendContactEmail(
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return { success: false, error: "Please enter a valid email address." };
   }
+
+  const contactRateLimit = await checkContactRateLimit();
+  if (contactRateLimit.error) {
+    return contactRateLimit;
+  }
+
 
   const resendApiKey = process.env.RESEND_API_KEY;
   const contactEmail = process.env.CONTACT_EMAIL;
