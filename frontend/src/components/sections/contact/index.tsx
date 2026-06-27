@@ -7,9 +7,7 @@ export default function Contact() {
   return (
     <section id="contact" className="bg-black px-8 py-24">
       <div className="mx-auto grid w-full max-w-5xl gap-12 md:grid-cols-2 md:gap-16">
-        <ContactForm />
-        
-        <div>
+        <div className="order-1 md:order-2">
           <h2 className="mt-2 text-3xl font-bold tracking-tight text-white md:text-4xl">
             Let's work together
           </h2>
@@ -35,6 +33,10 @@ export default function Contact() {
               />
             </a>
           </div>
+        </div>
+
+        <div className="order-2 md:order-1">
+          <ContactForm />
         </div>
       </div>
     </section>
