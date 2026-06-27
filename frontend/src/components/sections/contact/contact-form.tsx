@@ -11,6 +11,8 @@ import {
 
 const initialState: ContactState = { success: false };
 
+const TOAST_VISIBLE_MS = 3000;
+
 const inputClassName =
   "w-full rounded-md border border-white/20 bg-white/5 px-4 py-2.5 text-sm text-white placeholder:text-white/40 outline-none transition-colors focus:border-white/40";
 
@@ -30,8 +32,9 @@ export function ContactForm() {
   const blockedUntil =
     state.rateLimitedUntil ?? initialRateLimit.until ?? null;
   const isRateLimited = blockedUntil !== null && now < blockedUntil;
+  const toastAge = toastShownAt === null ? null : now - toastShownAt;
   const showToast =
-    toastShownAt !== null && now - toastShownAt < 3000;
+    toastAge !== null && toastAge < TOAST_VISIBLE_MS;
   const displayError =
     state.error ?? (isRateLimited ? initialRateLimit.error : undefined);
 
@@ -60,15 +63,15 @@ export function ContactForm() {
       setNow(shownAt);
     }, 0);
 
-    const timer = window.setTimeout(() => {
+    const hideTimer = window.setTimeout(() => {
       setNow(Date.now());
-    }, 3000);
+    }, TOAST_VISIBLE_MS);
 
     return () => {
       window.clearTimeout(showTimer);
-      window.clearTimeout(timer);
+      window.clearTimeout(hideTimer);
     };
-  }, [state.success]);
+  }, [state]);
 
   useEffect(() => {
     if (blockedUntil === null || now >= blockedUntil) {
