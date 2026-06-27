@@ -16,54 +16,36 @@ const inputClassName =
 
 export function ContactForm() {
   const formRef = useRef<HTMLFormElement>(null);
-  const [showToast, setShowToast] = useState(false);
-  const [blockedUntil, setBlockedUntil] = useState<number | null>(null);
-  const [rateLimitError, setRateLimitError] = useState<string | null>(null);
+  const [initialRateLimit, setInitialRateLimit] = useState<{
+    until?: number;
+    error?: string;
+  }>({});
+  const [toastShownAt, setToastShownAt] = useState<number | null>(null);
+  const [now, setNow] = useState(() => Date.now());
   const [state, formAction, pending] = useActionState(
     sendContactEmail,
     initialState,
   );
 
-  const isRateLimited =
-    blockedUntil !== null && Date.now() < blockedUntil;
+  const blockedUntil =
+    state.rateLimitedUntil ?? initialRateLimit.until ?? null;
+  const isRateLimited = blockedUntil !== null && now < blockedUntil;
+  const showToast =
+    toastShownAt !== null && now - toastShownAt < 3000;
+  const displayError =
+    state.error ?? (isRateLimited ? initialRateLimit.error : undefined);
 
   useEffect(() => {
     checkContactRateLimit().then((result) => {
       if (result.rateLimitedUntil) {
-        setBlockedUntil(result.rateLimitedUntil);
-        setRateLimitError(result.error ?? null);
+        setInitialRateLimit({
+          until: result.rateLimitedUntil,
+          error: result.error,
+        });
+        setNow(Date.now());
       }
     });
   }, []);
-
-  useEffect(() => {
-    if (state.rateLimitedUntil) {
-      setBlockedUntil(state.rateLimitedUntil);
-      if (state.error) {
-        setRateLimitError(state.error);
-      }
-    }
-  }, [state.rateLimitedUntil, state.error]);
-
-  useEffect(() => {
-    if (!blockedUntil) {
-      return;
-    }
-
-    const remainingMs = blockedUntil - Date.now();
-    if (remainingMs <= 0) {
-      setBlockedUntil(null);
-      setRateLimitError(null);
-      return;
-    }
-
-    const timer = window.setTimeout(() => {
-      setBlockedUntil(null);
-      setRateLimitError(null);
-    }, remainingMs);
-
-    return () => window.clearTimeout(timer);
-  }, [blockedUntil]);
 
   useEffect(() => {
     if (!state.success) {
@@ -71,14 +53,34 @@ export function ContactForm() {
     }
 
     formRef.current?.reset();
-    setShowToast(true);
+
+    const shownAt = Date.now();
+    const showTimer = window.setTimeout(() => {
+      setToastShownAt(shownAt);
+      setNow(shownAt);
+    }, 0);
 
     const timer = window.setTimeout(() => {
-      setShowToast(false);
+      setNow(Date.now());
     }, 3000);
 
-    return () => window.clearTimeout(timer);
+    return () => {
+      window.clearTimeout(showTimer);
+      window.clearTimeout(timer);
+    };
   }, [state.success]);
+
+  useEffect(() => {
+    if (blockedUntil === null || now >= blockedUntil) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      setNow(Date.now());
+    }, blockedUntil - now);
+
+    return () => window.clearTimeout(timer);
+  }, [blockedUntil, now]);
 
   return (
     <>
@@ -138,9 +140,9 @@ export function ContactForm() {
             />
           </button>
 
-          {(state.error ?? rateLimitError) && (
+          {displayError && (
             <p className="text-sm text-red-400">
-              {state.error ?? rateLimitError}
+              {displayError}
             </p>
           )}
         </div>
