@@ -63,6 +63,18 @@ bun lint
 
 `bun lint` runs ESLint with `--max-warnings=0`, so warnings fail both local hooks and CI.
 
+## Docker
+
+The frontend has a multi-stage Dockerfile that builds the Next.js standalone output with Bun and runs it in a distroless Node.js image.
+
+Run the production container locally from the repository root:
+
+```bash
+docker compose up --build
+```
+
+The container listens on [http://localhost:3000](http://localhost:3000) and reads runtime environment variables from `frontend/.env`.
+
 ## Quality Gates
 
 Local commits run:
