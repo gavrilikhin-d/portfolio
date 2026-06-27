@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useActionState, useEffect, useRef, useState } from "react";
 
 import {
@@ -127,10 +128,12 @@ export function ContactForm() {
             className="btn-dark w-fit"
           >
             {pending ? "Sending..." : "Submit"}
-            <img
+            <Image
               src="/icons/chevron-right.svg"
               alt=""
               aria-hidden
+              width={16}
+              height={16}
               className="size-4"
             />
           </button>

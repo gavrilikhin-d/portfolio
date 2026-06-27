@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { ContactForm } from "./contact-form";
 
 const linkedInUrl =
@@ -10,11 +12,11 @@ export default function Contact() {
         <div className="order-1 md:order-2">
           <p className="text-gradient-primary text-sm font-medium">Contact</p>
           <h2 className="mt-2 text-3xl font-bold tracking-tight text-white md:text-4xl">
-            Let's work together
+            Let&apos;s work together
           </h2>
           <p className="mt-4 max-w-md text-base leading-7 text-white/70">
             Have a project in mind or just want to say hi?<br />
-            Fill out the form and I'll get back to you as soon as possible.
+            Fill out the form and I&apos;ll get back to you as soon as possible.
           </p>
 
           <div className="mt-8">
@@ -26,10 +28,12 @@ export default function Contact() {
               className="mt-3 inline-flex items-center gap-2 rounded-md border border-white/30 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:border-white/50 hover:bg-white/5"
             >
               LinkedIn
-              <img
+              <Image
                 src="/icons/linkedin.svg"
                 alt=""
                 aria-hidden
+                width={16}
+                height={16}
                 className="size-4"
               />
             </a>

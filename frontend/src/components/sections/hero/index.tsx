@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import "./styles.css";
 
 export default function Hero() {
@@ -6,7 +8,7 @@ export default function Hero() {
       <div className="hero-appear mx-auto flex w-full max-w-5xl flex-col items-start">
         <div>
           <p className="text-gradient-primary text-xl font-medium pl-[1.5px]"> {/* pl-[1.5px] is an optical adjustment to make `H` align with `F` */}
-            Hello, I'm Daniil
+            Hello, I&apos;m Daniil
           </p>
 
           <h1 className="text-5xl font-bold leading-none tracking-tight">
@@ -27,11 +29,14 @@ export default function Hero() {
             className="bg-gradient-primary inline-flex items-center gap-1.5 rounded-md px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
           >
             View My Work
-            <img
+            <Image
               src="/icons/arrow-right.svg"
               alt=""
               aria-hidden
+              width={20}
+              height={20}
               className="size-5"
+              loading="eager"
             />
           </a>
 
@@ -40,11 +45,14 @@ export default function Hero() {
             className="inline-flex items-center gap-1.5 rounded-md border border-white/30 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:border-white/50 hover:bg-white/5"
           >
             Get In Touch
-            <img
+            <Image
               src="/icons/chat-bubble.svg"
               alt=""
               aria-hidden
+              width={16}
+              height={16}
               className="size-4"
+              loading="eager"
             />
           </a>
         </div>
