@@ -5,7 +5,7 @@ import "./styles.css";
 export default function Hero() {
   return (
     <div className="relative flex min-h-screen w-full items-center overflow-hidden bg-black bg-[url('/background.webp')] bg-cover bg-center bg-no-repeat px-8">
-      <div className="absolute left-0 top-0 z-10 flex w-full items-center justify-end px-8 py-6">
+      <div className="absolute left-0 top-0 z-10 flex w-full items-center justify-end px-6 py-6">
         <span className="hero-github-tooltip-wrap">
           <a
             href="https://github.com/gavrilikhin-d/portfolio"
