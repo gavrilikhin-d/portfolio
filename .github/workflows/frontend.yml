@@ -12,6 +12,9 @@ concurrency:
   group: frontend-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 env:
   HUSKY: 0
 
