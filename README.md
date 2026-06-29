@@ -46,7 +46,14 @@ RATE_LIMIT_WINDOW=
 RESEND_API_KEY=
 UPSTASH_REDIS_REST_URL=
 UPSTASH_REDIS_REST_TOKEN=
+AWS_REGION=
+AWS_S3_CV_BUCKET=
+AWS_S3_CV_KEY=
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
 ```
+
+The CV preview and download are served from `/api/cv`, which reads the PDF from S3 when the AWS variables are configured. Without S3 configuration, local development falls back to `frontend/public/cv.pdf`.
 
 Production values live in Vercel. Preview deployments should use separate non-production credentials if the contact form needs to work there.
 
