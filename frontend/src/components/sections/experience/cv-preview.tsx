@@ -1,10 +1,10 @@
-import { cvDownloadName, cvPath } from "./experience-data";
+import { cvDownloadName, cvDownloadPath, cvPreviewPath } from "./experience-data";
 import "./styles.css";
 
 export function CvPreview() {
   return (
     <a
-      href={cvPath}
+      href={cvDownloadPath}
       download={cvDownloadName}
       className="cv-file"
       aria-label="Download CV"
@@ -17,7 +17,7 @@ export function CvPreview() {
       </div>
       <div className="cv-file-body">
         <iframe
-          src={`${cvPath}#page=1&view=Fit&toolbar=0&navpanes=0&scrollbar=0&pagemode=none`}
+          src={`${cvPreviewPath}#page=1&view=Fit&toolbar=0&navpanes=0&scrollbar=0&pagemode=none`}
           title="CV preview"
           className="cv-file-frame"
         />

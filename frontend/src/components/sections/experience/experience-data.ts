@@ -22,5 +22,6 @@ export const workExperience: WorkExperience[] = [
   }
 ];
 
-export const cvPath = "/cv.pdf";
+export const cvPreviewPath = "/api/cv";
+export const cvDownloadPath = "/api/cv?download=1";
 export const cvDownloadName = "Daniil-Gavrilikhin-CV.pdf";
