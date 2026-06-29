@@ -4,7 +4,33 @@ import "./styles.css";
 
 export default function Hero() {
   return (
-    <div className="flex min-h-screen w-full items-center overflow-hidden bg-black bg-[url('/background.webp')] bg-cover bg-center bg-no-repeat px-8">
+    <div className="relative flex min-h-screen w-full items-center overflow-hidden bg-black bg-[url('/background.webp')] bg-cover bg-center bg-no-repeat px-8">
+      <div className="absolute left-0 top-0 z-10 flex w-full items-center justify-end px-6 py-6">
+        <span className="hero-github-tooltip-wrap">
+          <a
+            href="https://github.com/gavrilikhin-d/portfolio"
+            target="_blank"
+            rel="noreferrer"
+            aria-describedby="hero-github-tooltip"
+            aria-label="View this site's GitHub repository"
+            className="inline-flex size-12 items-center justify-center rounded-2xl border border-white/15 bg-black/35 text-white shadow-lg shadow-black/30 backdrop-blur transition-colors hover:border-white/30 hover:bg-white/10"
+          >
+            <Image
+              src="/icons/github.svg"
+              alt=""
+              aria-hidden
+              width={24}
+              height={24}
+              className="size-6"
+              priority
+            />
+          </a>
+          <span id="hero-github-tooltip" role="tooltip" className="hero-github-tooltip">
+            This website repository
+          </span>
+        </span>
+      </div>
+
       <div className="hero-appear mx-auto flex w-full max-w-5xl flex-col items-start">
         <div>
           <p className="text-gradient-primary text-xl font-medium pl-[1.5px]"> {/* pl-[1.5px] is an optical adjustment to make `H` align with `F` */}

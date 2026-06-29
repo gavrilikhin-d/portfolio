@@ -23,3 +23,52 @@
     transform: none;
   }
 }
+
+.hero-github-tooltip-wrap {
+  position: relative;
+}
+
+.hero-github-tooltip {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  z-index: 20;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(255 255 255 / 0.15);
+  background: rgb(0 0 0 / 0.85);
+  padding: 0.375rem 0.625rem;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: rgb(255 255 255 / 0.9);
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.45);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease,
+    visibility 0.15s ease;
+  visibility: hidden;
+}
+
+.hero-github-tooltip-wrap:hover .hero-github-tooltip,
+.hero-github-tooltip-wrap:focus-within .hero-github-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-github-tooltip {
+    transform: none;
+    transition: opacity 0.15s ease, visibility 0.15s ease;
+  }
+
+  .hero-github-tooltip-wrap:hover .hero-github-tooltip,
+  .hero-github-tooltip-wrap:focus-within .hero-github-tooltip {
+    transform: none;
+  }
+}
